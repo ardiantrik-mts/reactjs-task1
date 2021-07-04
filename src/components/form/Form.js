@@ -1,0 +1,69 @@
+import { useState } from 'react'
+import FormCreate from "../form-create/FormCreate";
+// import FormList from "../form-list/FormList";
+import React from 'react';
+import { Table, Button } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+
+const InputForm =() => {
+    const [getForms, setForms] = useState([
+
+    ])
+
+    const eventCreateForm = (forms) => {
+        setForms(getForms.concat(forms))
+        // setPosts.push(post)
+    }
+
+    const eventDeleteItem = (id) => {
+        const deletedItems = [...getForms].filter((items) => items.id !== id);
+        setForms(deletedItems)
+    }
+
+    return (
+        <div>
+            <h1>Item Bazaar Input Form</h1>
+            <FormCreate onCreateForm={eventCreateForm} />
+            <Table hover responsive className="App-table">
+                <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>Name</th>
+                    <th>Stock</th>
+                    <th>Description</th>
+                    <th>Expired Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {
+                        getForms.map((forms)=> {
+                            //HOW CAN I PASS THIS (eventdelete) BELOW TO OTHER COMPONENT??????????
+                            return <tr key={forms.id}>
+                                        <td>{forms.id}</td>
+                                        <td>{forms.name}</td>
+                                        <td>{forms.stock}</td>
+                                        <td>{forms.description}</td>
+                                        <td>{forms.expiredDate}</td>
+                                        <td>
+                                            <Button color="danger" onClick={() => eventDeleteItem(forms.id)}>
+                                                <FontAwesomeIcon icon={faTrashAlt} />&nbsp;Remove
+                                            </Button>
+                                        </td>
+                                    </tr>
+                        })
+                    }
+                </tbody>
+                {/* <FormList dataForms={getForms} /> */}
+            </Table>
+        </div>
+        // <div>
+        //     <h3>Post</h3>
+        //     <PostnoteCreate onCreatePostnote={eventCreatePostnote} />
+        //     <PostnoteList dataPostnotes={getPostnotes} />
+        // </div>
+    )
+}
+
+export default InputForm;
