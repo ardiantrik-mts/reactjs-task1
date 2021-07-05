@@ -39,7 +39,7 @@ const InputForm =() => {
                 <tbody>
                     {
                         getForms.map((forms)=> {
-                            //HOW CAN I PASS THIS (eventdelete) BELOW TO OTHER COMPONENT??????????
+                            //HOW CAN I PASS THIS MF(eventdelete) BELOW TO OTHER COMPONENT??????????
                             return <tr key={forms.id}>
                                         <td>{forms.id}</td>
                                         <td>{forms.name}</td>

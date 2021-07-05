@@ -2,32 +2,43 @@ import { useState } from 'react'
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
-const FormCreate = (props) => {
+const CreateItem = (props) => {
     const [getInputForm, setInputForm] = useState({ 
         name:'',
         stock: '',
         description: '',
-        expiredDate: ''
+        expiredDate: '',
+        carrotRate: '',
+        image:''
     })
 
     const handleSubmit = (event) => {
         event.preventDefault()
         const newInputForm = {
-            id: Math.floor(Math.random() * 100) + 1,
             name: getInputForm.name,
             stock: getInputForm.stock,
             description: getInputForm.description,
-            expiredDate: getInputForm.expiredDate
+            expiredDate: getInputForm.expiredDate,
+            carrotRate: getInputForm.carrotRate
         }
+
+        axios.post(`http://127.0.0.1:8080/api/item/`, newInputForm )
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        })
 
         props.onCreateForm(newInputForm)  
         setInputForm({
             name:'',
             stock: '',
             description: '',
-            expiredDate: ''
+            expiredDate: '',
+            carrotRate: '',
+            image: ''
         })
         // setInputForm('')
 
@@ -84,6 +95,22 @@ const FormCreate = (props) => {
                 onChange={(e) => setInputForm({ ...getInputForm, expiredDate:e.target.value })}
                 />
             </FormGroup>
+            <FormGroup>
+                <Label for="itemRate">Carrot Rate</Label>
+                <Input
+                type="number"
+                name="carrotRate"
+                id="itemRate"
+                min="0"
+                placeholder="Add the item stock here"
+                value={getInputForm.carrotRate}
+                onChange={(e) => setInputForm({ ...getInputForm, carrotRate:e.target.value })}
+                />
+            </FormGroup>
+            {/* <FormGroup>
+                <Label for="itemImage">Image</Label>
+                <Input type="file" name="file" id="itemImage" />
+            </FormGroup> */}
             <br/>
             <Button color="primary" type="submit"><FontAwesomeIcon icon={faPlus} />&nbsp;Submit</Button>
         </Form>
@@ -94,4 +121,4 @@ const FormCreate = (props) => {
     )
 }
 
-export default FormCreate;
+export default CreateItem;
