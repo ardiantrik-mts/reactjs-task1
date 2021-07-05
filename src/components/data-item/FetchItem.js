@@ -10,19 +10,30 @@ const FetchItem = () => {
 
     ])
     // console.log(props);
-    useEffect(() => {
-        axios.get(`http://127.0.0.1:8080/api/item/`)
+
+    const fetchData = () => {
+        const config = {
+            headers : {
+                authorization: 'Bearer '+ localStorage.getItem('token')
+            }
+        }
+        axios.get(`item/`, config)
             .then(res => {
                 const items = res.data.results;
                 // console.log(items);
                 setItems(items)
             })
+    }
+
+    useEffect(() => {
+        fetchData();
             // fetch('127.0.0.1:8080/api/item/')
             // .then(res => res.json())
             // .then(json => setItems(json))
-    },['http://127.0.0.1:3000/fetchItem'])
+    },[])
 
     const eventCreateForm = (forms) => {
+
         // setForms(getForms.concat(forms))
         // setPosts.push(post)
     }
@@ -34,6 +45,8 @@ const FetchItem = () => {
                 console.log(res);
                 console.log(res.data);
             })
+
+        fetchData();
     }
 
     return (
@@ -42,7 +55,6 @@ const FetchItem = () => {
             <Table hover responsive className="App-table">
                 <thead>
                 <tr>
-                    <th>#ID</th>
                     <th>Name</th>
                     <th>Stock</th>
                     <th>Description</th>
@@ -58,7 +70,6 @@ const FetchItem = () => {
                             let expDate = items.expiredDate
                             expDate = expDate.split("T")
                             return <tr key={items._id}>
-                                        <td>{items._id}</td>
                                         <td>{items.name}</td>
                                         <td>{items.stock}</td>
                                         <td>{items.description}</td>
