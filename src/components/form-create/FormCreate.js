@@ -2,9 +2,13 @@ import { useState } from 'react'
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { addData } from '../actions';
+import { useDispatch } from 'react-redux';
 
 const FormCreate = (props) => {
+    const dispatch = useDispatch()
+
     const [getInputForm, setInputForm] = useState({ 
         name:'',
         stock: '',
@@ -22,7 +26,9 @@ const FormCreate = (props) => {
             expiredDate: getInputForm.expiredDate
         }
 
-        props.onCreateForm(newInputForm)  
+        dispatch(addData(newInputForm))
+
+        // props.onCreateForm(newInputForm)  
         setInputForm({
             name:'',
             stock: '',
@@ -31,7 +37,7 @@ const FormCreate = (props) => {
         })
         // setInputForm('')
 
-        console.log(newInputForm);
+        // console.log(newInputForm);
     }
 
     // const handleInputForm = (event) => {

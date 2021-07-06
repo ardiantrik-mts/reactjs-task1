@@ -5,12 +5,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import { createStore } from 'redux';
+import allReducers from './components/reducers';
+import { Provider } from 'react-redux';
+
+const myStore = createStore(
+  allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 axios.defaults.baseURL = 'http://127.0.0.1:8080/api/';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={ myStore }>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
